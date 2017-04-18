@@ -32,12 +32,12 @@ The procedure below is a most simple one for quick use (**A recommended way is d
 
 ```bash
 # Create required directory in case (optional)
-$ mkdir -p $(jupyter --data-dir)/nbextensions
+mkdir -p $(jupyter --data-dir)/nbextensions
 # Clone the repository
-$ cd $(jupyter --data-dir)/nbextensions
-$ git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+cd $(jupyter --data-dir)/nbextensions
+git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
 # Activate the extension
-$ jupyter nbextension enable vim_binding/vim_binding
+jupyter nbextension enable vim_binding/vim_binding
 ```
 
 
@@ -124,11 +124,11 @@ If you would like to customize the design, create a your `custom.css` at `~/.jup
 ```css
 /* Jupyter cell is in normal mode when code mirror */
 .edit_mode .cell.selected .CodeMirror-focused.cm-fat-cursor {
-  background-color: #F5F6EB;
+  background-color: #F5F6EB !important;
 }
 /* Jupyter cell is in insert mode when code mirror */
 .edit_mode .cell.selected .CodeMirror-focused:not(.cm-fat-cursor) {
-  background-color: #F6EBF1;
+  background-color: #F6EBF1 !important;
 }
 ```
 
