@@ -1,6 +1,6 @@
 jupyter-vim-binding
 ===============================================================================
-![Version 2.0.4](https://img.shields.io/badge/version-2.0.4-yellow.svg?style=flat-square) ![Support Jupyter 4.1 or above](https://img.shields.io/badge/support-Jupyter%204.1%20or%20above-yellowgreen.svg?style=flat-square) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE) ![Doc](https://img.shields.io/badge/doc-%3Ah%20Press%20F1%20on%20Jupyter-orange.svg?style=flat-square)
+![Version 2.0.6](https://img.shields.io/badge/version-2.0.6-yellow.svg?style=flat-square) ![Support Jupyter 4.1 or above](https://img.shields.io/badge/support-Jupyter%204.1%20or%20above-yellowgreen.svg?style=flat-square) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE) ![Doc](https://img.shields.io/badge/doc-%3Ah%20Press%20F1%20on%20Jupyter-orange.svg?style=flat-square)
 
 Do you use Vim? And you need to use [Jupyter Notebook]?
 This is a [Jupyter Notebook][] (formerly known as [IPython Notebook][]) extension to enable Vim like environment powered by [CodeMirror's Vim][].
@@ -105,7 +105,7 @@ To customize key mappings in *Vim mode*, you need to understand that there are t
 To customize mappings provided by [CodeMirror's Vim][], create a [`custom.js`][] at `~/.jupyter/custom/custom.js` (at least in Linux) and use [CodeMirror's Vim API][] to manipulate like:
 
 ```javascript
-// Configure CodeMirror
+// Configure CodeMirror Keymap
 require([
   'nbextensions/vim_binding/vim_binding',   // depends your installation
 ], function() {
@@ -116,6 +116,21 @@ require([
   CodeMirror.Vim.map("k", "<Plug>(vim-binding-gk)", "normal");
   CodeMirror.Vim.map("gj", "<Plug>(vim-binding-j)", "normal");
   CodeMirror.Vim.map("gk", "<Plug>(vim-binding-k)", "normal");
+});
+
+// Configure Jupyter Keymap
+require([
+  'nbextensions/vim_binding/vim_binding',
+  'base/js/namespace',
+], function(vim_binding, ns) {
+  // Add post callback
+  vim_binding.on_ready_callbacks.push(function(){
+    var km = ns.keyboard_manager;
+    // Allow Ctrl-2 to change the cell mode into Markdown in Vim normal mode
+    km.edit_shortcuts.add_shortcut('ctrl-2', 'vim-binding:change-cell-to-markdown', true);
+    // Update Help
+    km.edit_shortcuts.events.trigger('rebuild.QuickHelp');
+  });
 });
 ```
 
@@ -153,6 +168,19 @@ Because of this policy, users have no chance to use default key mappings of jupy
 - https://code.google.com/p/chromium/issues/detail?id=33056
 - http://stackoverflow.com/questions/15911785/overriding-shortcut-keys-in-firefox-and-chrome
 - https://github.com/liftoff/GateOne/issues/290
+
+### Vivaldi
+
+The chromium-based [Vivaldi][vivaldi] browser provides more flexibility in key mapping customizations and might be a viable alternative to Google Chrome for power users.
+In contrast to Google Chrome or Chromium, (almost) all keyboard shortcuts in Vivaldi can be [changed or disabled][vivaldi-keyboard], including (but not limited to) `Ctrl-N`, `Ctrl-T`, `Ctrl-J`, etc.
+
+Furthermore, Vivaldi allows assigning a keyboard shortcut to temporarily [disable all other browser keyboard shortcuts][vivaldi-disable], making all key mappings available for other uses.
+Note that this temporary change applies globally to *all* tabs and windows of the browser instance (or "Profile") under consideration. To confine it to a subset of tabs, use a separate profile via [the `--user-data-dir=...` option][user-data-dir].
+
+[vivaldi]: https://vivaldi.com/
+[vivaldi-keyboard]: https://vivalditips.com/customization/shortcuts/en
+[vivaldi-disable]: https://www.ghacks.net/2017/02/07/vivaldi-tip-block-all-keyboard-shortcuts/
+[user-data-dir]: https://chromium.googlesource.com/chromium/src/+/master/docs/user_data_dir.md
 
 ### Clipboard
 
