@@ -20,3 +20,8 @@ require([
     km.edit_shortcuts.events.trigger('rebuild.QuickHelp');
   });
 });
+
+// Disable autoclosing of brackets, parentheses, quotes, etc.
+if (IPython.CodeCell) {
+  IPython.CodeCell.options_default.cm_config.autoCloseBrackets = false;
+}
