@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Move custom.js file
+# Copy custom.js file
 mkdir -p ~/.jupyter/custom
 cp custom.js ~/.jupyter/custom/custom.js
 
