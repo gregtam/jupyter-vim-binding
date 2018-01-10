@@ -2,7 +2,7 @@
 require([
   'nbextensions/vim_binding/vim_binding',   // depends your installation
 ], function() {
-  // Map jj to <Esc>
+  // Map kj to <Esc>
   CodeMirror.Vim.map("kj", "<Esc>", "insert");
 });
 
